@@ -58,7 +58,8 @@ const defaultStyle = {
             flexDirection: 'column',
             alignItems: 'center',
             width: '100%',
-            height: '60%',
+            height: '60%', 
+            backgroundColor: '#f7f7f7'
         },
         itemStyle: {
             fontFamily: 'Lato, sans-serif',
@@ -76,24 +77,34 @@ const defaultStyle = {
             height: '30%',
             display: 'flex',
             flexDirection: 'column',
+            justifyContent:'space-around',
             alignItems: 'center',
             // backgroundColor: 'pink',
         },
         footerTextStyle:{
             fontFamily: 'Lato, sans-serif',
-            fontSize: '26px',
+            fontSize: '30px',
             color: '#b8b8b8',
         },
         footerThemeStyle:{
+            height: '60%',
+            width: '80%',
+            // backgroundColor: 'lightyellow',
             display: 'flex',
             flexDirection: 'column',
+            justifyContent: 'space-between',
             alignItems: 'center',
+        },
+        footerButtonStyle:{
+            width: '120px',
+            fontFamily: 'Lato, sans-serif',
+            fontSize: '20px',
+            backgroundColor: '#F7F7F7',
+            borderColor: '#F7F7F7',
+            color: '#b8b8b8',
         }
     },
-    themeButtonStyle:{
-        width: '50px',
-        height: '20px'
-    }
+    
 
 }
  

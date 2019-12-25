@@ -3,13 +3,18 @@ import React from 'react';
 
 
 const ThemeButton = (props) => {
-  const { themeButtonStyle } = props;
+    const { footerButtonStyle,
+            theme } = props;
 
-  return (
-      <div>
-            <button style={themeButtonStyle}>Default</button>
-      </div>
-  );
+    const handleClick =() => {
+        console.log('footerButtonStyle');
+    }
+
+    return (
+        <div>
+            <button onClick={handleClick} style={footerButtonStyle}><strong>{theme}</strong></button>
+        </div>
+    );
 }
 
 export default ThemeButton;
