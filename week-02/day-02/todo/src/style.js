@@ -1,16 +1,34 @@
 const defaultStyle = {
+    background: '#50E3C1',
+    frame: '#F7F7F7',
+    text: '#b8b8b8'
+}
+
+const supermanStyle = {
+    background: '#FBBB45',
+    frame: '#94BEDC',
+    text: '#194194'
+}
+
+const batmanStyle = {
+    background: '#000',
+    frame: '#FFE900',
+    text: '#7F7E00'
+}
+
+const defaultTheme = {
     background: {
-        backgroundColor: '#50E3C1',
+        backgroundColor: defaultStyle.background,
     },
     framework: {
-        backgroundColor: '#F7F7F7',
+        backgroundColor: defaultStyle.frame,
     },
     headerStyle: {
-        color: '#b8b8b8',
+        color: defaultStyle.text,
     },
     inputStyle: {
         inputFrameStyle:{
-            borderColor: '#b8b8b8',
+            borderColor: defaultStyle.text,
         },
         inputButtonStyle: {
             backgroundColor: '#DF69E8',
@@ -19,37 +37,38 @@ const defaultStyle = {
     },
     todoListStyle: {
         todoListFrameStyle: {
-            backgroundColor: '#f7f7f7'
+            backgroundColor: defaultStyle.frame
         },
         itemStyle: {
-            color: '#b8b8b8',
+            color: defaultStyle.text,
         }
     },
     footerStyle:{
         footerTextStyle:{
-            color: '#b8b8b8',
+            color: defaultStyle.text,
         },
         footerButtonStyle:{
-            backgroundColor: '#F7F7F7',
-            borderColor: '#F7F7F7',
-            color: '#b8b8b8',
+            backgroundColor: defaultStyle.frame,
+            borderColor: defaultStyle.frame,
+            color: defaultStyle.text,
         }
     },
 }
  
-const supermanStyle = {
+
+const supermanTheme = {
     background: {
-        backgroundColor: '#FBBB45',
+        backgroundColor: supermanStyle.background,
     },
     framework: {
-        backgroundColor: '#94BEDC',
+        backgroundColor: supermanStyle.frame,
     },
     headerStyle: {
-        color: '#194194',
+        color: supermanStyle.text,
     },
     inputStyle: {
         inputFrameStyle:{
-            borderColor: '#194194',
+            borderColor: supermanStyle.text,
         },
         inputButtonStyle: {
             backgroundColor: '#DE111B',
@@ -58,26 +77,63 @@ const supermanStyle = {
     },
     todoListStyle: {
         todoListFrameStyle: {
-            backgroundColor: '#94BEDC'
+            backgroundColor: supermanStyle.frame
         },
         itemStyle: {
-            color: '#194194',
+            color: supermanStyle.text,
         }
     },
     footerStyle:{
         footerTextStyle:{
-            color: '#194194',
+            color: supermanStyle.text,
         },
         footerButtonStyle:{
-            backgroundColor: '#94BEDC',
-            borderColor: '#94BEDC',
-            color: '#194194',
+            backgroundColor: supermanStyle.frame,
+            borderColor: supermanStyle.frame,
+            color: supermanStyle.text,
         }
     },
 }
 
 
+const batmanTheme = {
+    background: {
+        backgroundColor: batmanStyle.background,
+    },
+    framework: {
+        backgroundColor: batmanStyle.frame,
+    },
+    headerStyle: {
+        color: batmanStyle.text,
+    },
+    inputStyle: {
+        inputFrameStyle:{
+            borderColor: batmanStyle.text,
+        },
+        inputButtonStyle: {
+            backgroundColor: 'lightgrey',
+            color: '#000',
+        }  
+    },
+    todoListStyle: {
+        todoListFrameStyle: {
+            backgroundColor: batmanStyle.frame
+        },
+        itemStyle: {
+            color: batmanStyle.text,
+        }
+    },
+    footerStyle:{
+        footerTextStyle:{
+            color: batmanStyle.text,
+        },
+        footerButtonStyle:{
+            backgroundColor: batmanStyle.frame,
+            borderColor: batmanStyle.frame,
+            color: batmanStyle.text,
+        }
+    },
+}
 
 
-
-export { defaultStyle, supermanStyle }
+export { defaultTheme, supermanTheme, batmanTheme }

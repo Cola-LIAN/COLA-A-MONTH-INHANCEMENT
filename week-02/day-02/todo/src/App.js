@@ -1,17 +1,18 @@
 //External Dependencies
-import React from 'react';
-import './App.css';
-
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //Internal Dependencies
-import { defaultStyle, supermanStyle} from './style.js';
+import './App.css';
+import { defaultTheme, supermanTheme, batmanTheme} from './style.js';
 import Screen from './components/Screen/Screen.js';
 
 const App = () => {
+
+  const[ theme, setTheme ] = useState(defaultTheme)
+
   return (
-    <div>
-      <Screen theme={ supermanStyle }/>
-    </div>
+      <Screen theme={theme} setTheme={setTheme} todo/>
   );
 }
 

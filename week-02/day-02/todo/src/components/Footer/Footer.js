@@ -1,6 +1,5 @@
 //External Dependencies
 import React, { useState }  from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //Internal Dependencies
 import ThemeButton from '../ThemeButton/ThemeButton.js';
@@ -10,12 +9,12 @@ import './Footer.css';
 const Footer = (props) => {
     const [themeSwitcherValue, setThemeSwitcherValue] = useState(0);
 
-    const { footerStyle } = props;
+    const { footerStyle, 
+            setTheme } = props;
 
     const { 
             footerTextStyle,
             footerButtonStyle } = footerStyle;
-
 
     return (
         <div class='footerFrame'>
@@ -24,9 +23,10 @@ const Footer = (props) => {
             </div> 
             { themeSwitcherValue? 
                 <div class='footerTheme'>
-                    <ThemeButton theme='Default' footerButtonStyle={footerButtonStyle}/>
-                    <ThemeButton theme='Superman' footerButtonStyle={footerButtonStyle}/>
-                    <ThemeButton theme='Batman' footerButtonStyle={footerButtonStyle}/>     
+                    <ThemeButton themeName='Default' setTheme={setTheme} footerButtonStyle={footerButtonStyle}/>
+                    {/* <ThemeButton themeName='Epam' setTheme={setTheme} footerButtonStyle={footerButtonStyle}/> */}
+                    <ThemeButton themeName='Superman' setTheme={setTheme}  footerButtonStyle={footerButtonStyle}/>
+                    <ThemeButton themeName='Batman' setTheme={setTheme} footerButtonStyle={footerButtonStyle}/>     
                 </div> 
                 :null 
             }  
