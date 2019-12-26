@@ -2,6 +2,9 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
+//Internal Dependencies
+import './TodoList.css';
+
 const itemList = [
     'wake up',
     'do some work',
@@ -14,12 +17,11 @@ const TodoList = (props) => {
 
     
     return (
-        <div style={todoListFrameStyle}>
+        <div style={todoListFrameStyle} class='todoListFrame'>
             {itemList.map(item => {
                 return (
-                    <div style={itemStyle}>
+                    <div style={itemStyle} class='item'>
                         {item}
-                        
                     </div>
                 )
             })}

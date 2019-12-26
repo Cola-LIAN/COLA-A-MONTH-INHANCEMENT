@@ -4,15 +4,13 @@ import './App.css';
 
 
 //Internal Dependencies
-import defaultStyle from './style.js';
-import Screen from './components/Screen.js';
-
-
+import { defaultStyle, supermanStyle} from './style.js';
+import Screen from './components/Screen/Screen.js';
 
 const App = () => {
   return (
     <div>
-      <Screen theme={defaultStyle}/>
+      <Screen theme={ supermanStyle }/>
     </div>
   );
 }

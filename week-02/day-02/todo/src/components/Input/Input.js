@@ -1,18 +1,19 @@
 //External Dependencies
 import React from 'react';
 
+//Internal Dependencies
+import './Input.css'
 
 const Input = (props) => {
 
     const { inputStyle } = props;
     const { inputFrameStyle, 
-            inputBoxStyle,
             inputButtonStyle }=inputStyle;
 
     return (
-        <div style={inputFrameStyle}>
-            <input style={inputBoxStyle} ></input>
-            <button style={inputButtonStyle}>Add</button>
+        <div style={inputFrameStyle} class='inputFrame'>
+            <input class='inputBox' ></input>
+            <button style={inputButtonStyle} class='inputButton'>Add</button>
         </div>
     )
 }
