@@ -41,7 +41,11 @@ const defaultTheme = {
         },
         itemStyle: {
             color: defaultStyle.text,
+        },
+        iconStyle: {
+            color: 'active? red : black',
         }
+
     },
     footerStyle:{
         footerTextStyle:{

@@ -28,5 +28,7 @@
 }
 
 #deleteIcon:active {
-    color: red
+    font-size: inherit;
+    /* color: red;
+    background-color: black; */
 }
