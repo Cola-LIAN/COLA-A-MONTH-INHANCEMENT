@@ -4,6 +4,7 @@ import React,{ useState } from 'react';
 //Internal Dependencies
 import './Input.css'
 import SelectInput from '@material-ui/core/Select/SelectInput';
+import TodoList from '../TodoList/TodoList';
 
 const Input = (props) => {
     const [inputValue, setInputValue] = useState('');
@@ -14,19 +15,22 @@ const Input = (props) => {
             inputButtonStyle }=inputStyle;
 
     const handleAdd = () => {
-        if(inputValue.length > 0){
+        if((inputValue.length > 0) && (todoList.indexOf(inputValue)===-1)){
             setTodoList([...todoList, inputValue]);
             setInputValue('');
             setInputPlaceholder('');
-        }else{
-            setInputPlaceholder('Please input your todo item.')
+        }else if(inputValue.length <= 0){
+            setInputPlaceholder('Please input your todo item.');
+        }else if(todoList.indexOf(inputValue)!== -1){
+            setInputValue('');
+            setInputPlaceholder('Todo item has existed.');
         }
     }   
 
     return (
-        <div style={inputFrameStyle} class='inputFrame'>
-            <input class='inputBox' value={inputValue} placeholder={inputPlaceholder} onChange={(e) => setInputValue(e.target.value)}></input>
-            <button style={inputButtonStyle} class='inputButton' onClick={handleAdd}>Add</button>
+        <div style={inputFrameStyle} className='inputFrame'>
+            <input className='inputBox' value={inputValue} placeholder={inputPlaceholder} onChange={(e) => {setInputValue(e.target.value)}}></input>
+            <button style={inputButtonStyle} className='inputButton' onClick={handleAdd}>Add</button>
         </div>
     )
 }

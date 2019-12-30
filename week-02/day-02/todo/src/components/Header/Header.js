@@ -6,7 +6,7 @@ const Header = (props) => {
   const { headerStyle } = props;
 
   return (
-      <div style={headerStyle} class='header'>
+      <div style={headerStyle} className='header'>
         TODOS
       </div>
   );

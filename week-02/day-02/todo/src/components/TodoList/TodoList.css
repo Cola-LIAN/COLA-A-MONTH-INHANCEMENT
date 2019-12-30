@@ -4,7 +4,7 @@
     align-items: center;
     width: 90%;
     height: 60%;
-    overflow:scroll;
+    overflow: scroll;
 }
 .item {   
     width: 89%; 
@@ -24,6 +24,9 @@
     justify-content: space-around;
 }
 #deleteIcon{ 
+    font-size: inherit;
+}
+#checkIcon{ 
     font-size: inherit;
 }
 

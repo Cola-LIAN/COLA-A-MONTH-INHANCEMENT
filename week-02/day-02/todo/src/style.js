@@ -16,6 +16,8 @@ const batmanStyle = {
     text: '#7F7E00'
 }
 
+
+
 const defaultTheme = {
     background: {
         backgroundColor: defaultStyle.background,

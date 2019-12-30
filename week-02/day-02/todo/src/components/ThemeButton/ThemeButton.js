@@ -24,7 +24,7 @@ const ThemeButton = (props) => {
         <div>
             <button 
                 style={footerButtonStyle} 
-                class='themeButton' 
+                className='themeButton' 
                 onClick={handleChangeTheme}>
                 <strong>{themeName}</strong>
             </button>

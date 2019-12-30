@@ -24,8 +24,8 @@ const Screen = (props) => {
     } = theme;
 
   return (
-    <div style={background} class='background'> 
-      <div style={framework} class='framework'>
+    <div style={background} className='background'> 
+      <div style={framework} className='framework'>
           <Header headerStyle={headerStyle}/>
           <Input inputStyle={inputStyle} setTodoList={setTodoList} todoList={todoList}/>
           <TodoList todoListStyle={todoListStyle} todoList={todoList} setTodoList={setTodoList} />

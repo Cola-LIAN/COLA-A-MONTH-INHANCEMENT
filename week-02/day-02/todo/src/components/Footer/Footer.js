@@ -17,12 +17,12 @@ const Footer = (props) => {
             footerButtonStyle } = footerStyle;
 
     return (
-        <div class='footerFrame'>
-            <div style={footerTextStyle} class='footerText' onClick={() => setThemeSwitcherValue(!themeSwitcherValue)}>
+        <div className='footerFrame'>
+            <div style={footerTextStyle} className='footerText' onClick={() => setThemeSwitcherValue(!themeSwitcherValue)}>
                 THEME SWITCHER
             </div> 
             { themeSwitcherValue? 
-                <div class='footerTheme'>
+                <div className='footerTheme'>
                     <ThemeButton themeName='Default' setTheme={setTheme} footerButtonStyle={footerButtonStyle}/>
                     {/* <ThemeButton themeName='Epam' setTheme={setTheme} footerButtonStyle={footerButtonStyle}/> */}
                     <ThemeButton themeName='Superman' setTheme={setTheme}  footerButtonStyle={footerButtonStyle}/>
