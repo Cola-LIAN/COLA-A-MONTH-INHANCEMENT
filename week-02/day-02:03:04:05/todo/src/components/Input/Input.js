@@ -14,14 +14,25 @@ const Input = (props) => {
     const { inputFrameStyle, 
             inputButtonStyle }=inputStyle;
 
+    const isTodoExist = (inputValue) => {
+        let exist = false;
+        todoList.forEach(todo => {
+            if(todo.todoText === inputValue){
+                exist = true
+            }
+        })
+        return exist
+    }
+
+
     const handleAdd = () => {
-        if((inputValue.length > 0) && (todoList.indexOf(inputValue)===-1)){
-            setTodoList([...todoList, inputValue]);
+        if((inputValue.length > 0) && (!isTodoExist(inputValue))){
+            setTodoList([...todoList, {todoText:inputValue, done: false}]);
             setInputValue('');
             setInputPlaceholder('');
         }else if(inputValue.length <= 0){
             setInputPlaceholder('Please input your todo item.');
-        }else if(todoList.indexOf(inputValue)!== -1){
+        }else if(isTodoExist(inputValue)){
             setInputValue('');
             setInputPlaceholder('Todo item has existed.');
         }

@@ -8,7 +8,7 @@ import Input from '../Input/Input.js';
 import TodoList from '../TodoList/TodoList.js';
 import Footer from '../Footer/Footer.js'
 
-const initialList = ['wake up', 'do some work', 'prepare for demo','Stand-up meeting'];
+const initialList = [{todoText: 'wake up', done: false}, {todoText: 'do some work', done: false} , {todoText: 'prepare for demo', done: false},{todoText: 'Stand-up meeting', done: false}];
 
 const Screen = (props) => {
 
