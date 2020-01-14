@@ -1,0 +1,8 @@
+.songListTitle{
+  height: 10%;
+  padding-left: 2%;
+  display: flex;
+  align-items: center;
+  font-family: 'Lato', sans-serif;
+  background-color: sienna;
+}
