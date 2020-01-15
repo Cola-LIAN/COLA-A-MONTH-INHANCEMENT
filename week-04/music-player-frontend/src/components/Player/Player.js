@@ -3,7 +3,7 @@ import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-import { LinearProgress, Slider } from '@material-ui/core';
+import { Slider } from '@material-ui/core';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -11,9 +11,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 //Internal Dependencies
 import './Player.css';
-// import music from '../music/蝴蝶与蓝.mp3';
-// import music from '../music/你瞒我瞒.mp3';
-import { showMusicListAction, playAndPlauseAction, switchMusicAction, switchMusic } from '../../redux/actions';
+import { showMusicListAction, switchMusicAction} from '../../redux/actions';
 
 
 //Component Definition
@@ -21,61 +19,99 @@ class Player extends Component {
 
   constructor(){
     super();
-    this.state={
-      totalTime: 0,
+    this.state = {
       currentTime: 0,
-      timeLoop: null,
+      totalTime: 0,
+      isPaused: true
     }
   }
 
   componentDidMount(){
     this.audio.current.addEventListener('loadedmetadata', () => {
-      // this.setState({totalTime: this.audio.current.duration});
-      console.log(this.audio.current.duration);
-  }, false);
+      this.setState({
+        totalTime: Math.ceil(this.audio.current.duration),
+        isPaused: this.audio.current.paused
+      }); 
+    }, false);
+    
     // this.audio = createRef();
     this.props.showMusicList();
-    
   }
 
   handleClick = (id) => {
-    console.log(id);
     if(id === 'playIcon'){
-      console.log(this.audio.current);
-
-      (async () => {
-        try {
-          console.log(this.audio.src)
-        await this.audio.current.play();
-        } catch(e) {
-          console.log(this.audio.src);
-        }
-      })()
-      this.props.playAndPauseMusic();
+      this.audio.current.play();
+      this.setState({
+        isPaused: this.audio.current.paused
+      });
     }else if( id === 'pauseIcon'){
       this.audio.current.pause();
-      this.props.playAndPauseMusic();
+      this.setState({
+        isPaused: this.audio.current.paused
+      });
+    }else if( id === 'nextIcon'){
+      let newId;
+      if(this.props.currentMusic.id !== 3){
+        newId = this.props.currentMusic.id + 1
+      }else{
+        newId = 1;
+      }
+      
+      this.audio.current.pause();
+      this.props.switchMusic(newId);
+      this.audio.current.addEventListener('loadedmetadata', () => {
+        this.audio.current.play();
+        this.setState({
+          isPaused: this.audio.current.paused
+        }); 
+      }, false);
+
+    }else if( id === 'previousIcon'){
+      let newId;
+      if(this.props.currentMusic.id !== 1){
+        newId = this.props.currentMusic.id - 1
+      }else{
+        newId = 3;
+      }
+
+      this.audio.current.pause();
+      this.props.switchMusic(newId);
+
+      this.audio.current.addEventListener('loadedmetadata', () => {
+        this.audio.current.play();
+        this.setState({
+          isPaused: this.audio.current.paused
+        }); 
+      }, false);
     }
 
-    else if( id === 'nextIcon'){
-      // console.log(this.props.currentMusic.id);
-      let newId = (this.props.currentMusic.id===1)? 2:1;
-      this.audio.current.pause();
-      this.props.switchMusic(newId);
-    }
-    else if( id === 'previousIcon'){
-      // console.log(this.props.currentMusic.id);
-      // let newId = this.props.currentMusic.id - 1;
-      let newId = (this.props.currentMusic.id === 1)? 2:1;
-      this.audio.current.pause();
-      this.props.switchMusic(newId);
-    }
+  }
+
+  regulateTime(seconds) {
+    const date = new Date(null);
+    date.setSeconds(seconds);
+    return date.toISOString().substr(14, 5);
+  }
+
+  handleChange = () => {
+    setInterval(() => {
+      this.setState(() => {
+          return {currentTime: this.audio.current.currentTime}
+    })}, 200)
+  }
+
+  handleMouseUp = () => {
+    console.log(888)
+  }
+
+  handleMouseDown = () => {
+    console.log(666)
   }
 
 
 render(){
   this.audio = createRef();
-  
+  this.handleChange();
   return(
     <div className='playerFrame'>
       <audio src={this.props.currentMusic.source} ref={this.audio} />
@@ -86,9 +122,8 @@ render(){
         <div className='TextInfoContainer'>
           <span id='songTitle'>{this.props.currentMusic.name} -{this.props.currentMusic.artist}</span>
           <div>
-            <Slider value={60} id='linearProgressBar'/>
-            {/* <LinearProgress variant="determinate" id='linearProgressBar' value={60}/> */}
-            <span id='timeProgress'>0:00/{this.props.currentMusic.time}</span> 
+            <Slider id='linearProgressBar' max={this.state.totalTime} value={this.state.currentTime} onChange={this.handleChange} onMouseDown={this.handleMouseDown}/>
+            <span id='timeProgress'>{this.regulateTime(this.state.currentTime)}/{this.props.currentMusic.time}</span> 
           </div>       
         </div>
       </div>
@@ -96,10 +131,9 @@ render(){
         <FavoriteBorderIcon id='favoriteIcon' className='icon'/>
         <SkipPreviousIcon id='previousIcon' className='icon'/>
         {
-        // this.audio.paused?
-        this.props.isPlay?
-        <PauseCircleFilledIcon id='pauseIcon' className='icon'/>
-        :<PlayCircleFilledWhiteIcon id='playIcon' className='icon'/>
+        this.state.isPaused?
+        <PlayCircleFilledWhiteIcon id='playIcon' className='icon'/>
+        :<PauseCircleFilledIcon id='pauseIcon' className='icon'/>
         } 
         <SkipNextIcon id='nextIcon' className='icon'/>
       </div>
@@ -117,7 +151,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     showMusicList: () => {dispatch(showMusicListAction())},
-    playAndPauseMusic: () => {dispatch(playAndPlauseAction())},
     switchMusic: (newId) => {dispatch(switchMusicAction(newId))}
   }
 }

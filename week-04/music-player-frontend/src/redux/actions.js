@@ -1,5 +1,5 @@
 const showMusicList = 'SHOW_MUSIC_LIST';
-const playAndPause = 'PLAY_AND_PAUSE';
+// const playAndPause = 'PLAY_AND_PAUSE';
 const pickMusic = 'PICK_MUSIC';
 const switchMusic = 'SWITCH_MUSIC';
 
@@ -19,12 +19,6 @@ const pickMusicAction = (item) => {
   }
 }
 
-const playAndPlauseAction = () => {
-  return {
-    type: playAndPause,
-  }
-}
-
 const switchMusicAction = (newId) => {
   return {
     type: switchMusic,
@@ -33,10 +27,8 @@ const switchMusicAction = (newId) => {
 }
 
 export {showMusicList,
-        playAndPause,
         pickMusic,
         switchMusic,
         showMusicListAction,
-        playAndPlauseAction,
         pickMusicAction,
         switchMusicAction}

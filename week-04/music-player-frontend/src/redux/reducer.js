@@ -1,4 +1,4 @@
-import { showMusicList, pickMusic, playAndPause, switchMusic } from './actions';
+import { showMusicList, pickMusic, switchMusic } from './actions';
 
 const initialState = {
   musicList: [],
@@ -17,25 +17,15 @@ const reducer = (state=initialState, action) => {
     })
   }
   
-  else if(action.type === playAndPause){
-    return({
-      ...state,
-      isPlay: !state.isPlay
-    })
-  }
-
   else if(action.type === pickMusic){
     return({
       ...state,
       currentMusic: action.item,
-      // isPlay: true
     })
   }
 
   else if(action.type === switchMusic){
     let [newCurrentMusic] = state.musicList.filter(item =>item.id === action.newId)
-    console.log(newCurrentMusic);
-
     return({
       ...state,
       currentMusic: newCurrentMusic,

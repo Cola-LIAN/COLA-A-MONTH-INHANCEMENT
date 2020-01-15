@@ -15,6 +15,14 @@ const initMusicList = [
     source: '你瞒我瞒.mp3',
     time: '3:59',
     album: '未知'
+  },
+  {
+    id: 3,
+    name: '快乐崇拜',
+    artist: '潘玮柏',
+    source: '快乐崇拜.mp3',
+    time: '3:30',
+    album: 'Wu ha'
   }
 ]
 

@@ -3,7 +3,7 @@ import React from 'react';
 
 //Internal Dependencies
 import './ListItem.css';
-import Test from '../test';
+
 
 //Component Definition
 const ListItem = (props) => {

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import './SongList.css';
 import ListItem from '../ListItem/ListItem.js';
 import { showMusicListAction, pickMusicAction} from '../../redux/actions';
-import Test from '../test';
 
 //Component Definition
 const SongList = (props) => {
@@ -30,8 +29,6 @@ const SongList = (props) => {
          <ListItem onClick={() => handlePickMusic(song)} className={song} title={song.name} time={song.time} artist={song.artist} album={song.album} fontSize='5px'/>
         )})
       }
-        {/* <ListItem title='北京欢迎你' time='3:00' artist='群星' album='未知' fontSize='5px'/> */}
-        <Test />
     </>
   );
 }
