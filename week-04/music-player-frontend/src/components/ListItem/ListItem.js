@@ -7,13 +7,13 @@ import './ListItem.css';
 
 //Component Definition
 const ListItem = (props) => {
-  const {title, artist, album, time, fontSize, onClick } = props;
-
+  const { song, onClick, fontSize } = props;
+  const { name, artist, album, time} = song;
 
   return (
     <div className='listItem' style={{fontSize: fontSize}} onClick={onClick}>
       <div className='container titleContainer' >
-        {title}
+        {name}
       </div>
       <div className='container artistContainer' >
         {artist}

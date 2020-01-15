@@ -1,6 +1,7 @@
 //External Dependencies
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+// import {}
 
 //Internal Dependencies
 import './SongList.css';
@@ -18,18 +19,33 @@ const SongList = (props) => {
   }
 
   return (
-    <>
+    <React.Fragment>
       <div className='songListTitle'>
         <strong>Song List</strong>
       </div>
-      <ListItem title='Title' time='Time' artist='Artist' album='Album' fontSize='17px' />
+      <ListItem 
+        song={{
+          name: 'Name',
+          time: 'Time',
+          artist: 'Artist',
+          album: 'Album'
+        }}
+       fontSize='17px'/>
+      
       {
         wholeState.musicList.map((song) => {
         return(
-         <ListItem onClick={() => handlePickMusic(song)} className={song} title={song.name} time={song.time} artist={song.artist} album={song.album} fontSize='5px'/>
-        )})
+        //  <ListItem onClick={() => handlePickMusic(song)} className={song} title={song.name} time={song.time} artist={song.artist} album={song.album} fontSize='5px'/>
+         <ListItem
+          className={song}
+          song={song}
+          fontSize='5px'
+          onClick={() => handlePickMusic(song)} 
+          />
+        
+         )})
       }
-    </>
+    </React.Fragment>
   );
 }
 

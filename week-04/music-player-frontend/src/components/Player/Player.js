@@ -22,7 +22,8 @@ class Player extends Component {
     this.state = {
       currentTime: 0,
       totalTime: 0,
-      isPaused: true
+      isPaused: true,
+      timeLoop: 0,
     }
   }
 
@@ -38,34 +39,37 @@ class Player extends Component {
     this.props.showMusicList();
   }
 
-  handleClick = (id) => {
+  handleClick = (e) => {
+    let id = e.target.id;
+
     if(id === 'playIcon'){
-      this.audio.current.play();
+      this.startLoop();
       this.setState({
         isPaused: this.audio.current.paused
       });
     }else if( id === 'pauseIcon'){
-      this.audio.current.pause();
+      this.stopLoop();
       this.setState({
         isPaused: this.audio.current.paused
       });
-    }else if( id === 'nextIcon'){
+    }
+    
+    
+    else if( id === 'nextIcon'){
       let newId;
       if(this.props.currentMusic.id !== 3){
         newId = this.props.currentMusic.id + 1
       }else{
         newId = 1;
       }
-      
-      this.audio.current.pause();
+      this.stopLoop();
       this.props.switchMusic(newId);
       this.audio.current.addEventListener('loadedmetadata', () => {
-        this.audio.current.play();
+        this.startLoop();
         this.setState({
-          isPaused: this.audio.current.paused
+          isPaused: this.audio.current.paused,  
         }); 
       }, false);
-
     }else if( id === 'previousIcon'){
       let newId;
       if(this.props.currentMusic.id !== 1){
@@ -74,17 +78,16 @@ class Player extends Component {
         newId = 3;
       }
 
-      this.audio.current.pause();
+      this.stopLoop();
       this.props.switchMusic(newId);
 
       this.audio.current.addEventListener('loadedmetadata', () => {
-        this.audio.current.play();
+        this.startLoop();
         this.setState({
           isPaused: this.audio.current.paused
         }); 
       }, false);
     }
-
   }
 
   regulateTime(seconds) {
@@ -93,28 +96,47 @@ class Player extends Component {
     return date.toISOString().substr(14, 5);
   }
 
-  handleChange = () => {
-    setInterval(() => {
-      this.setState(() => {
-          return {currentTime: this.audio.current.currentTime}
-    })}, 200)
-  }
-
-  handleMouseUp = () => {
-    console.log(888)
+  handleChange = (evt, time) => {
+    // setInterval(() => {
+    //   this.setState({currentTime: this.audio.current.currentTime})
+    // }, 200)
+    // console.log(evt.target);
+    this.setState({currentTime: time});
   }
 
   handleMouseDown = () => {
-    console.log(666)
+    this.stopLoop();
+  }
+
+  handleMouseUp = () => {
+    this.audio.current.currentTime = this.state.currentTime;
+    if(!this.state.isPaused){
+      this.startLoop();
+    }
+  }
+
+  startLoop = () => {
+    this.setState({
+      timeLoop: setInterval(() => {
+        this.setState({currentTime: this.audio.current.currentTime})
+      }, 1000),
+    });
+    this.audio.current.play();
+  }
+
+  stopLoop = () => {
+    clearInterval(this.state.timeLoop);
+    this.audio.current.pause();
   }
 
 
 render(){
   this.audio = createRef();
-  this.handleChange();
   return(
     <div className='playerFrame'>
       <audio src={this.props.currentMusic.source} ref={this.audio} />
+
+
       <div className='songInfo'>
         <div className='songCoverContainer'>
           <div className='songCover'></div>
@@ -122,12 +144,18 @@ render(){
         <div className='TextInfoContainer'>
           <span id='songTitle'>{this.props.currentMusic.name} -{this.props.currentMusic.artist}</span>
           <div>
-            <Slider id='linearProgressBar' max={this.state.totalTime} value={this.state.currentTime} onChange={this.handleChange} onMouseDown={this.handleMouseDown}/>
+            <Slider 
+              id='linearProgressBar' 
+              max={this.state.totalTime} 
+              value={this.state.currentTime} 
+              onChange={this.handleChange} 
+              onMouseDown={this.handleMouseDown}
+              onMouseUp={this.handleMouseUp}/>
             <span id='timeProgress'>{this.regulateTime(this.state.currentTime)}/{this.props.currentMusic.time}</span> 
           </div>       
         </div>
       </div>
-      <div className='playIcon' onClick={(e) => this.handleClick(e.target.id)}>
+      <div className='playIcon' onClick={this.handleClick}>
         <FavoriteBorderIcon id='favoriteIcon' className='icon'/>
         <SkipPreviousIcon id='previousIcon' className='icon'/>
         {
@@ -143,7 +171,7 @@ render(){
 
 const mapStateToProps = (state) => {
   return {
-    isPlay: state.isPlay,
+    // isPlay: state.isPlay,
     currentMusic: state.currentMusic
   }
 }
