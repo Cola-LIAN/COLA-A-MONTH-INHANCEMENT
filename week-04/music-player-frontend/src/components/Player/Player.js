@@ -23,120 +23,123 @@ class Player extends Component {
       currentTime: 0,
       totalTime: 0,
       isPaused: true,
-      timeLoop: 0,
-    }
+      sliderUpdateLoopId: 0,
+    };
+    this.audio = null;
   }
 
   componentDidMount(){
-    this.audio.current.addEventListener('loadedmetadata', () => {
+    this.audio = this.audioDom.current;
+    this.audio.addEventListener('loadedmetadata', () => {
       this.setState({
-        totalTime: Math.ceil(this.audio.current.duration),
-        isPaused: this.audio.current.paused
+        totalTime: Math.ceil(this.audio.duration),
+        isPaused: this.audio.paused
       }); 
     }, false);
-    
-    // this.audio = createRef();
     this.props.showMusicList();
   }
 
-  handleClick = (e) => {
-    let id = e.target.id;
-
-    if(id === 'playIcon'){
-      this.startLoop();
-      this.setState({
-        isPaused: this.audio.current.paused
-      });
-    }else if( id === 'pauseIcon'){
-      this.stopLoop();
-      this.setState({
-        isPaused: this.audio.current.paused
-      });
-    }
-    
-    
-    else if( id === 'nextIcon'){
-      let newId;
-      if(this.props.currentMusic.id !== 3){
-        newId = this.props.currentMusic.id + 1
-      }else{
-        newId = 1;
-      }
-      this.stopLoop();
-      this.props.switchMusic(newId);
-      this.audio.current.addEventListener('loadedmetadata', () => {
-        this.startLoop();
-        this.setState({
-          isPaused: this.audio.current.paused,  
-        }); 
-      }, false);
-    }else if( id === 'previousIcon'){
-      let newId;
-      if(this.props.currentMusic.id !== 1){
-        newId = this.props.currentMusic.id - 1
-      }else{
-        newId = 3;
-      }
-
-      this.stopLoop();
-      this.props.switchMusic(newId);
-
-      this.audio.current.addEventListener('loadedmetadata', () => {
-        this.startLoop();
-        this.setState({
-          isPaused: this.audio.current.paused
-        }); 
-      }, false);
-    }
-  }
-
-  regulateTime(seconds) {
+//helper function 
+  regulateTime = (seconds) => {
     const date = new Date(null);
     date.setSeconds(seconds);
     return date.toISOString().substr(14, 5);
   }
 
+  produceNewSongId = (evtId) => {
+    let newSongId;
+    if(evtId === 'nextIcon'){
+      this.props.currentMusic.id !== this.props.musicListLength ? 
+      newSongId = this.props.currentMusic.id + 1 : newSongId = 1;
+    }else if (evtId === 'previousIcon'){
+      this.props.currentMusic.id !== 1 ?
+      newSongId = this.props.currentMusic.id - 1 : newSongId = this.props.musicListLength;
+    }
+    return newSongId
+  }
+
+//Slider status
+  startSliderUpdateLoop = () => {
+    const id = setInterval(() => {
+        this.setState({currentTime: this.audio.currentTime})
+    }, 1000)
+    this.setState({
+      sliderUpdateLoopId: id
+    });
+  }
+
+  stopSliderUpdateLoop = () => {
+    clearInterval(this.state.timeLoop); //stop loop by id
+  }
+
+  resetSliderStatus = () => {
+    this.setState({currentTime: 0});
+  }
+
+  handleClick = (e) => {
+    let id = e.target.id;
+//play and pause
+    if(id === 'playIcon'){
+      this.switchPlayButton();
+      this.audio.play();
+      this.startSliderUpdateLoop();
+    }else if( id === 'pauseIcon'){
+      this.switchPlayButton();
+      this.audio.pause();
+      this.stopSliderUpdateLoop();
+    }
+
+//switch song
+    else if( id === 'previousIcon' || id === 'nextIcon'){
+      let newSongId = this.produceNewSongId(id);
+      this.props.switchMusic(newSongId);//switch a new song by id
+      this.stopSliderUpdateLoop();
+      this.resetSliderStatus();
+
+      //keep the play or pause status
+      if(!this.audio.paused){
+        this.audio.addEventListener('loadedmetadata', () => {
+          this.startSliderUpdateLoop();
+          this.audio.play();
+          this.setState({
+            isPaused: this.audio.paused
+          }); 
+        }, false);
+      }
+    } 
+  }
+
+
   handleChange = (evt, time) => {
-    // setInterval(() => {
-    //   this.setState({currentTime: this.audio.current.currentTime})
-    // }, 200)
-    // console.log(evt.target);
     this.setState({currentTime: time});
   }
 
   handleMouseDown = () => {
-    this.stopLoop();
+    this.stopSliderUpdateLoop();
+    this.audio.pause();
   }
 
   handleMouseUp = () => {
-    this.audio.current.currentTime = this.state.currentTime;
+    this.audio.currentTime = this.state.currentTime;
     if(!this.state.isPaused){
-      this.startLoop();
+      this.audio.play();
+      this.startSliderUpdateLoop();
     }
   }
 
-  startLoop = () => {
+  switchPlayButton = () => {
     this.setState({
-      timeLoop: setInterval(() => {
-        this.setState({currentTime: this.audio.current.currentTime})
-      }, 1000),
-    });
-    this.audio.current.play();
+      isPaused: !this.state.isPaused   
+    })
   }
 
-  stopLoop = () => {
-    clearInterval(this.state.timeLoop);
-    this.audio.current.pause();
-  }
 
 
 render(){
-  this.audio = createRef();
+  this.audioDom = createRef();
   return(
     <div className='playerFrame'>
-      <audio src={this.props.currentMusic.source} ref={this.audio} />
-
-
+      <audio src={this.props.currentMusic.source} ref={this.audioDom} />
       <div className='songInfo'>
         <div className='songCoverContainer'>
           <div className='songCover'></div>
@@ -163,14 +166,15 @@ render(){
         </Hamburger>
         
         {this.state.isPaused?
-        <Hamburger cid='playIcon'>
-          <PlayCircleFilledWhiteIcon id='play'/>
-        </Hamburger>
-        :
-        <Hamburger cid='pauseIcon' >
-          <PauseCircleFilledIcon id='pause'/>
-        </Hamburger>
+          <Hamburger cid='playIcon'>
+            <PlayCircleFilledWhiteIcon id='play'/>
+          </Hamburger>
+          :
+          <Hamburger cid='pauseIcon' >
+            <PauseCircleFilledIcon id='pause'/>
+          </Hamburger>
         } 
+
         <Hamburger cid='nextIcon'>
           <SkipNextIcon id='next'/>
         </Hamburger>
@@ -181,8 +185,8 @@ render(){
 
 const mapStateToProps = (state) => {
   return {
-    // isPlay: state.isPlay,
-    currentMusic: state.currentMusic
+    currentMusic: state.currentMusic,
+    musicListLength: state.musicList.length
   }
 }
 
