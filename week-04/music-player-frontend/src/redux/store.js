@@ -6,14 +6,13 @@ import thunk from 'redux-thunk';
 import reducer from './reducer';
 
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__();
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
 let store = createStore(
   reducer,
-  // composeEnhancers(
-    applyMiddleware(thunk)
-  // )
-// window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()
+  composeEnhancers(
+    applyMiddleware(thunk),
+  )
 );
 
 export default store

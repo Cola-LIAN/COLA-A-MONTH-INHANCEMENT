@@ -39,6 +39,7 @@ class Player extends Component {
     }, false);
 
     this.props.showMusicList();
+
     this.audio.addEventListener('ended', () => {
       this.handleClick('nextIcon');
     });
@@ -103,8 +104,7 @@ class Player extends Component {
       this.resetSliderStatus();
 
       //keep the play or pause status
-      console.log(this.audio.paused)
-      if(!this.audio.paused){
+      // if(!this.audio.paused){
         this.audio.addEventListener('loadedmetadata', () => {
           this.startSliderUpdateLoop();
           this.audio.play();
@@ -112,7 +112,7 @@ class Player extends Component {
             isPaused: this.audio.paused
           }); 
         }, false);
-      }
+      // }
     } 
 
   //Favorite songs

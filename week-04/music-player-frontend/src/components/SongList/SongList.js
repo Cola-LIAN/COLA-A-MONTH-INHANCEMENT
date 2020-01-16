@@ -32,9 +32,10 @@ const SongList = (props) => {
         }}
        fontSize='17px'/>  
       {
-        wholeState.musicList.map((song) => {
+        wholeState.musicList.map((song, index) => {
         return(
         <ListItem
+          key={index}
           className={song}
           song={song}
           fontSize='5px'
