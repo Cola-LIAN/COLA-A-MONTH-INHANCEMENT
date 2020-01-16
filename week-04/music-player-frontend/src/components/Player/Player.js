@@ -24,6 +24,7 @@ class Player extends Component {
       totalTime: 0,
       isPaused: true,
       sliderUpdateLoopId: 0,
+      favoriteIconColor: '#000'
     };
     this.audio = null;
   }
@@ -36,7 +37,11 @@ class Player extends Component {
         isPaused: this.audio.paused
       }); 
     }, false);
+
     this.props.showMusicList();
+    this.audio.addEventListener('ended', () => {
+      this.handleClick('nextIcon');
+    });
   }
 
 //helper function 
@@ -76,9 +81,10 @@ class Player extends Component {
     this.setState({currentTime: 0});
   }
 
-  handleClick = (e) => {
-    let id = e.target.id;
-//play and pause
+//Player operation
+  handleClick = (id) => {
+
+  //play and pause
     if(id === 'playIcon'){
       this.switchPlayButton();
       this.audio.play();
@@ -89,7 +95,7 @@ class Player extends Component {
       this.stopSliderUpdateLoop();
     }
 
-//switch song
+  //switch song
     else if( id === 'previousIcon' || id === 'nextIcon'){
       let newSongId = this.produceNewSongId(id);
       this.props.switchMusic(newSongId);//switch a new song by id
@@ -97,6 +103,7 @@ class Player extends Component {
       this.resetSliderStatus();
 
       //keep the play or pause status
+      console.log(this.audio.paused)
       if(!this.audio.paused){
         this.audio.addEventListener('loadedmetadata', () => {
           this.startSliderUpdateLoop();
@@ -107,8 +114,14 @@ class Player extends Component {
         }, false);
       }
     } 
-  }
 
+  //Favorite songs
+    else if ( id === 'favoriteIcon'){
+      this.setState({
+        favoriteIconColor: this.state.favoriteIconColor ==='red'?'#000':'red'
+      })
+    }
+  }
 
   handleChange = (evt, time) => {
     this.setState({currentTime: time});
@@ -134,7 +147,6 @@ class Player extends Component {
   }
 
 
-
 render(){
   this.audioDom = createRef();
   return(
@@ -158,8 +170,8 @@ render(){
           </div>       
         </div>
       </div>
-      <div className='playIcon' onClick={this.handleClick}>
-        <FavoriteBorderIcon id='favoriteIcon' />
+      <div className='playIcon' onClick={(e) => this.handleClick(e.target.id)}>
+        <FavoriteBorderIcon id='favoriteIcon' style={{color: this.state.favoriteIconColor}}/>
 
         <Hamburger cid='previousIcon'>
           <SkipPreviousIcon id='previous'/>

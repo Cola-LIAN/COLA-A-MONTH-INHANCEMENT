@@ -30,8 +30,7 @@ const SongList = (props) => {
           artist: 'Artist',
           album: 'Album'
         }}
-       fontSize='17px'/>
-      
+       fontSize='17px'/>  
       {
         wholeState.musicList.map((song) => {
         return(
