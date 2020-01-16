@@ -33,12 +33,11 @@
   height:100%;
   width: 20%;
   font-size: 50px;
-  /* background-color: cornflowerblue; */
+  /* background-color: #FFF; */
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 
 #songTitle{
   font-size: 12px;
@@ -46,7 +45,6 @@
 }
 #Artist{
   font-size: 10px;
-  /* display: inline; */
 }
 #timeProgress{
   display: block;
@@ -55,21 +53,18 @@
 #linearProgressBar{
   width: 90%
 }
-#playIcon{
+#play{
   font-size: inherit;
 }
-#pauseIcon{
+#pause{
   font-size: inherit;
 }
-#previousIcon{
+#previous{
   font-size: inherit;
 }
-#nextIcon{
+#next{
   font-size: inherit;
 }
-/* .icon{
-  font-size: inherit;
-} */
 #favoriteIcon{
   position: relative;
   right: 15px;

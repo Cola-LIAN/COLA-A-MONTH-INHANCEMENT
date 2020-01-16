@@ -12,7 +12,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 //Internal Dependencies
 import './Player.css';
 import { showMusicListAction, switchMusicAction} from '../../redux/actions';
-
+import Hamburger from '../Hamburger/Hamburger.js';
 
 //Component Definition
 class Player extends Component {
@@ -156,14 +156,24 @@ render(){
         </div>
       </div>
       <div className='playIcon' onClick={this.handleClick}>
-        <FavoriteBorderIcon id='favoriteIcon' className='icon'/>
-        <SkipPreviousIcon id='previousIcon' className='icon'/>
-        {
-        this.state.isPaused?
-        <PlayCircleFilledWhiteIcon id='playIcon' className='icon'/>
-        :<PauseCircleFilledIcon id='pauseIcon' className='icon'/>
+        <FavoriteBorderIcon id='favoriteIcon' />
+
+        <Hamburger cid='previousIcon'>
+          <SkipPreviousIcon id='previous'/>
+        </Hamburger>
+        
+        {this.state.isPaused?
+        <Hamburger cid='playIcon'>
+          <PlayCircleFilledWhiteIcon id='play'/>
+        </Hamburger>
+        :
+        <Hamburger cid='pauseIcon' >
+          <PauseCircleFilledIcon id='pause'/>
+        </Hamburger>
         } 
-        <SkipNextIcon id='nextIcon' className='icon'/>
+        <Hamburger cid='nextIcon'>
+          <SkipNextIcon id='next'/>
+        </Hamburger>
       </div>
     </div>
   )}

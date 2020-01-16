@@ -35,14 +35,12 @@ const SongList = (props) => {
       {
         wholeState.musicList.map((song) => {
         return(
-        //  <ListItem onClick={() => handlePickMusic(song)} className={song} title={song.name} time={song.time} artist={song.artist} album={song.album} fontSize='5px'/>
-         <ListItem
+        <ListItem
           className={song}
           song={song}
           fontSize='5px'
           onClick={() => handlePickMusic(song)} 
           />
-        
          )})
       }
     </React.Fragment>
