@@ -1,0 +1,24 @@
+.frame{
+  width: 80%;
+  height: 80%;
+  background-color: beige;
+}
+.header{
+  width: 100%;
+  height: 10%;
+}
+.body{
+  height: 75%;
+  background-color: burlywood;
+}
+.accountInfo{
+  width: 25%;
+  height: 100%;
+  background-color: lightsalmon;
+  float: left;
+}
+.songList{
+  width: 75%;
+  height: 100%;
+  float: left;
+}
