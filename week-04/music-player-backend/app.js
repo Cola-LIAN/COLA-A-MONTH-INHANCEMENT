@@ -1,8 +1,9 @@
 //External Dependencies
-require ('dotenv').config();
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT;
 let cors = require('cors');
 
 //Internal Denpendencies
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
   res.status(200).json(musicList);
+  
 });
 
 app.get('/mongo', async (req, res) => {

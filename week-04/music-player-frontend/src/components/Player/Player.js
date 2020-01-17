@@ -8,7 +8,6 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
-
 //Internal Dependencies
 import './Player.css';
 import { showMusicListAction, switchMusicAction} from '../../redux/actions';
@@ -52,16 +51,19 @@ class Player extends Component {
     return date.toISOString().substr(14, 5);
   }
 
-  produceNewSongId = (evtId) => {
-    let newSongId;
+  produceNewSongIndex = (evtId) => {
+    let newSongIndex;
+    let musicListLength = this.props.musicList.length;
+    let currentIndex = this.props.musicList.indexOf(this.props.currentMusic);
+
     if(evtId === 'nextIcon'){
-      this.props.currentMusic.id !== this.props.musicListLength ? 
-      newSongId = this.props.currentMusic.id + 1 : newSongId = 1;
+      currentIndex !== (musicListLength-1) ? 
+      newSongIndex = currentIndex + 1 : newSongIndex = 0;
     }else if (evtId === 'previousIcon'){
-      this.props.currentMusic.id !== 1 ?
-      newSongId = this.props.currentMusic.id - 1 : newSongId = this.props.musicListLength;
+      currentIndex !== 0 ?
+      newSongIndex = currentIndex - 1 : newSongIndex = (musicListLength-1);
     }
-    return newSongId
+    return newSongIndex
   }
 
 //Slider status
@@ -98,8 +100,8 @@ class Player extends Component {
 
   //switch song
     else if( id === 'previousIcon' || id === 'nextIcon'){
-      let newSongId = this.produceNewSongId(id);
-      this.props.switchMusic(newSongId);//switch a new song by id
+      let newSongIndex = this.produceNewSongIndex(id);
+      this.props.switchMusic(newSongIndex);//switch a new song by index
       this.stopSliderUpdateLoop();
       this.resetSliderStatus();
 
@@ -198,7 +200,7 @@ render(){
 const mapStateToProps = (state) => {
   return {
     currentMusic: state.currentMusic,
-    musicListLength: state.musicList.length
+    musicList: state.musicList
   }
 }
 

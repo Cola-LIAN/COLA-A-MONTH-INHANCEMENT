@@ -23,7 +23,9 @@
   "scripts": {
     "start-fd": "cd music-player-frontend && react-scripts start",
     "start-bd": "cd music-player-backend && nodemon app.js",
-    "start": "cd music-player-frontend && react-scripts start & cd music-player-backend && nodemon app.js"
+    "dev": "cd music-player-backend && node app.js & cd music-player-frontend && react-scripts start",
+    "build": "rm -rf music-player-backend/static && cd music-player-frontend && react-scripts build && mv build ../music-player-backend/static",
+    "start": "cd music-player-backend && node app.js"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -25,7 +25,7 @@ const reducer = (state=initialState, action) => {
   }
 
   else if(action.type === switchMusic){
-    let [newCurrentMusic] = state.musicList.filter(item =>item.id === action.newId)
+    let [newCurrentMusic] = state.musicList.filter(item => state.musicList.indexOf(item)=== action.newIndex  )
     return({
       ...state,
       currentMusic: newCurrentMusic,

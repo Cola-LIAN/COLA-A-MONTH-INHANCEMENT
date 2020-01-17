@@ -4,8 +4,9 @@ const pickMusic = 'PICK_MUSIC';
 const switchMusic = 'SWITCH_MUSIC';
 
 const showMusicListAction = () => async (dispatch) => {
-  let fetched = await fetch('http://localhost:3001');
+  let fetched = await fetch('http://localhost:3001/mongo');
   let list = await fetched.json();
+
   dispatch({
     type: showMusicList,
     list,
@@ -19,10 +20,10 @@ const pickMusicAction = (item) => {
   }
 }
 
-const switchMusicAction = (newId) => {
+const switchMusicAction = (newIndex) => {
   return {
     type: switchMusic,
-    newId
+    newIndex
   }
 }
 
