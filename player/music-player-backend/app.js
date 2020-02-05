@@ -19,7 +19,7 @@ app.use(express.json());
 // });
 
 app.get('/mongo', async (req, res) => {
-  const musicList2 = await mongndbQueryWithPromise();
+  const musicList2 = await mongndbQueryWithPromise('find', [{}]);
   res.status(200).json(musicList2);
 })
 

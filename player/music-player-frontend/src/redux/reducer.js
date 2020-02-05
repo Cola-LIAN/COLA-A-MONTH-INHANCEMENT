@@ -1,4 +1,4 @@
-import { showMusicList, pickMusic, switchMusic } from './actions';
+import { showMusicList, pickMusic, switchMusic, favoriteMusic } from './actions';
 
 const initialState = {
   musicList: [],
@@ -25,10 +25,20 @@ const reducer = (state=initialState, action) => {
   }
 
   else if(action.type === switchMusic){
-    let [newCurrentMusic] = state.musicList.filter(item => state.musicList.indexOf(item)=== action.newIndex  )
+    let [newCurrentMusic] = state.musicList.filter(item => state.musicList.indexOf(item)=== action.newIndex)
     return({
       ...state,
       currentMusic: newCurrentMusic,
+    })
+  }
+
+  else if(action.type === favoriteMusic){
+    return({
+      ...state,
+      currentMusic:{
+        ...state.currentMusic,
+        favorite: !state.currentMusic.favorite
+      }
     })
   }
 
